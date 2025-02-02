@@ -616,4 +616,27 @@
       setTimeout(init, 1000);
     })();
   }
+  (function() {
+    const updateUrl = 'https://raw.githubusercontent.com/almhtwy1/khamsat/main/خمسات%20-%20سكريبت%20موحّد%20مختصر-3.7.user.js';
+    const currentVersion = '3.6'; // هنا ضع رقم الإصدار الحالي المثبت عندك
+
+    async function checkForUpdate() {
+        try {
+            const response = await fetch(updateUrl);
+            const scriptText = await response.text();
+            const versionMatch = scriptText.match(/@version\s+([\d.]+)/);
+
+            if (versionMatch && versionMatch[1] !== currentVersion) {
+                if (confirm(`تحديث جديد متوفر (${versionMatch[1]})! هل ترغب بالتحديث الآن؟`)) {
+                    window.open(updateUrl, '_blank');
+                }
+            }
+        } catch (error) {
+            console.error('فشل التحقق من التحديث:', error);
+        }
+    }
+
+    checkForUpdate();
+})();
+
 })();
