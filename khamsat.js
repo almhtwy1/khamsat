@@ -3,7 +3,7 @@
 // ==UserScript==
 // @name         khamsat.js
 // @namespace    https://khamsat.com/
-// @version      3.7
+// @version      3.6
 // @description  دمج السكربتات الخاصة بتحسين تجربة خمسات مع عرض تحليل الأسعار داخل المواضيع فقط دون الظهور في صفحة الطلبات الرئيسية. التعديلات الجديدة تشمل تحميل التقييم وزر "تواصل معي" عند النقر فقط.
 // @author
 // @match        https://khamsat.com/purchase/*
