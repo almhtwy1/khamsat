@@ -1,3 +1,5 @@
+// @updateURL    https://raw.githubusercontent.com/almhtwy1/khamsat/main/khamsat.js
+// @downloadURL  https://raw.githubusercontent.com/almhtwy1/khamsat/main/khamsat.js
 // ==UserScript==
 // @name         khamsat.js
 // @namespace    https://khamsat.com/
@@ -9,8 +11,6 @@
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=khamsat.com
 // @grant        none
 // @require      https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js
-// @updateURL    https://raw.githubusercontent.com/almhtwy1/khamsat/main/khamsat.js
-// @downloadURL  https://raw.githubusercontent.com/almhtwy1/khamsat/main/khamsat.js
 // ==/UserScript==
 
 (function () {
