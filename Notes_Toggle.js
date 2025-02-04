@@ -31,7 +31,7 @@
         if (match && match[1]) {
           const note = localStorage.getItem(`khamsat_note_${match[1]}`) || '';
           if (note.trim()) {
-            // إذا كانت هناك ملاحظة محفوظة، نضيف أيقونة ملاحظة أمام عنوان الطلب
+            // إذا كانت هناك ملاحظة محفوظة، نضيف أيقونة ملاحظات أمام عنوان الطلب
             const td = link.closest('td');
             if (td && !td.querySelector('.note-icon')) {
               const noteIcon = document.createElement('div');
@@ -88,7 +88,7 @@
             saveNotification.style.display = 'inline';
             setTimeout(() => (saveNotification.style.display = 'none'), 2000);
             noteIndicator.style.display = noteTextarea.value.trim() ? 'inline' : 'none';
-            updateRequestListIcons();
+            updateRequestListIcons(); // تحديث الأيقونة بعد الحفظ
           } catch (error) {
             logError('Error saving note:', error);
             alert('حدث خطأ أثناء حفظ الملاحظات.');
@@ -101,7 +101,7 @@
           body.style.display = body.style.display === 'none' ? 'block' : 'none';
         });
   
-        updateRequestListIcons();
+        updateRequestListIcons(); // تأكد من تحديث الأيقونات في البداية
       } catch (error) {
         logError('Error initializing note feature:', error);
       }
@@ -110,4 +110,4 @@
     document.readyState === 'loading'
       ? document.addEventListener('DOMContentLoaded', initNoteFeature)
       : initNoteFeature();
-  })();
+})();
