@@ -25,11 +25,13 @@
     };
   
     const updateRequestListIcons = () => {
+      // نبحث عن الروابط التي تحتوي على عنوان الطلب
       document.querySelectorAll('a.ajaxbtn[href^="/community/requests/"]').forEach(link => {
         const match = link.getAttribute('href').match(/\/community\/requests\/(\d+)-/);
         if (match && match[1]) {
           const note = localStorage.getItem(`khamsat_note_${match[1]}`) || '';
           if (note.trim()) {
+            // إذا كانت هناك ملاحظة محفوظة، نضيف أيقونة ملاحظة أمام عنوان الطلب
             const td = link.closest('td');
             if (td && !td.querySelector('.note-icon')) {
               const noteIcon = document.createElement('div');
@@ -109,4 +111,3 @@
       ? document.addEventListener('DOMContentLoaded', initNoteFeature)
       : initNoteFeature();
   })();
-  
