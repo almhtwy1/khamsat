@@ -7,6 +7,7 @@
 // @match        https://khamsat.com/community/requests
 // @icon         https://khamsat.com/favicon.ico
 // @grant        GM_xmlhttpRequest
+// @grant        GM_xmlhttpRequest
 // ==/UserScript==
 
 (function () {
