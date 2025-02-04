@@ -1,1 +1,126 @@
-function _0x56c6(_0xe0ab7f,_0x20db81){const _0x3cb348=_0x3cb3();return _0x56c6=function(_0x56c639,_0x6352c){_0x56c639=_0x56c639-0x98;let _0x15b943=_0x3cb348[_0x56c639];return _0x15b943;},_0x56c6(_0xe0ab7f,_0x20db81);}function _0x3cb3(){const _0x48cc20=['53538QMwcYQ','body','children','\x0a\x20\x20\x20\x20.request-details-container\x20{\x20width:\x20100%;\x20box-sizing:\x20border-box;\x20padding:\x2010px;\x20background-color:\x20#fff;\x20}\x0a\x20\x20\x20\x20.request-content-wrapper\x20{\x20display:\x20flex;\x20gap:\x2020px;\x20}\x0a\x20\x20\x20\x20.request-details\x20{\x20flex:\x206;\x20text-align:\x20right;\x20}\x0a\x20\x20\x20\x20.request-comment-form\x20{\x20flex:\x204;\x20}\x0a\x20\x20\x20\x20.request-comment-form\x20textarea\x20{\x20width:\x20100%;\x20height:\x20100px;\x20box-sizing:\x20border-box;\x20resize:\x20vertical;\x20border:\x201px\x20solid\x20#ccc;\x20border-radius:\x204px;\x20padding:\x208px;\x20margin-bottom:\x208px;\x20}\x0a\x20\x20','2081184gFkDxa','addEventListener','preventDefault','.card-body\x20article','h3.details-head\x20a.ajaxbtn','ELEMENT_NODE','\x0a\x20\x20\x20\x20\x20\x20<td\x20colspan=\x22','application/x-www-form-urlencoded','a,\x20button,\x20input,\x20textarea','load','click','toString','1015424IkbGbD','879056qfkZyT','request-details-container','currentTarget','href','dataset','target','112152LnoUSy','remove','69240jgJjwN','66JJPWog','error','classList','nodeType','value','cursor','for','appendChild','querySelectorAll','div','729EmnOMR','\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22request-content-wrapper\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22request-details\x22>','insertAdjacentElement','action','true','innerHTML','Error\x20in\x20form\x20submission','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22request-comment-form\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20</td>\x0a\x20\x20\x20\x20','tr.forum_post','65vfKddH','تم\x20إرسال\x20التعليق\x20بنجاح','setAttribute','querySelector','expanded','createElement','assign','textarea','observe','toggle','5565104SFkGIs','.card-header,\x20.c-form__hb','confirm_','forEach','location','afterend','style','GET','POST','button[type=\x22submit\x22],\x20input[type=\x22submit\x22]','nextElementSibling','listenerAttached','label[for=\x22confirm\x22]'];_0x3cb3=function(){return _0x48cc20;};return _0x3cb3();}(function(_0x392803,_0x14f1e5){const _0x45ad9a=_0x56c6,_0x137a33=_0x392803();while(!![]){try{const _0x14a65c=parseInt(_0x45ad9a(0xd0))/0x1+-parseInt(_0x45ad9a(0xcf))/0x2+parseInt(_0x45ad9a(0xd9))/0x3*(parseInt(_0x45ad9a(0xd6))/0x4)+-parseInt(_0x45ad9a(0xa8))/0x5*(parseInt(_0x45ad9a(0xbf))/0x6)+-parseInt(_0x45ad9a(0xc3))/0x7+-parseInt(_0x45ad9a(0xb2))/0x8+parseInt(_0x45ad9a(0x9f))/0x9*(parseInt(_0x45ad9a(0xd8))/0xa);if(_0x14a65c===_0x14f1e5)break;else _0x137a33['push'](_0x137a33['shift']());}catch(_0x2e9181){_0x137a33['push'](_0x137a33['shift']());}}}(_0x3cb3,0x6b70b),(function(){'use strict';const _0x1be60c=_0x56c6;const _0x3d5488=_0x1be60c(0xc2);document['head'][_0x1be60c(0x9c)](Object['assign'](document['createElement'](_0x1be60c(0xb8)),{'textContent':_0x3d5488}));const _0x449413=_0x4e6ffa=>new Promise((_0x1deb6d,_0x40c765)=>{const _0x38adbe=_0x1be60c;GM_xmlhttpRequest({'method':_0x38adbe(0xb9),'url':_0x4e6ffa,'onload':({responseText:_0x75288e})=>{const _0x393244=_0x38adbe,_0x45b29c=new DOMParser()['parseFromString'](_0x75288e,'text/html');_0x1deb6d({'body':_0x45b29c[_0x393244(0xab)](_0x393244(0xc6)),'form':_0x45b29c['querySelector']('form#add_comment,\x20#add_comment\x20form')});},'onerror':_0x40c765});}),_0x3578fb=({body:_0x26f67e,form:_0x9330c9},_0x2919a1)=>{const _0x39d864=_0x1be60c,_0x3e5b4e=document[_0x39d864(0xad)]('tr');_0x3e5b4e['className']=_0x39d864(0xd1),_0x3e5b4e[_0x39d864(0xa4)]=_0x39d864(0xc9)+_0x2919a1+_0x39d864(0xa0)+(_0x26f67e?.[_0x39d864(0xa4)]||'')+_0x39d864(0xa6);if(_0x9330c9){const _0x366e06=_0x9330c9['cloneNode'](!![]);_0x366e06[_0x39d864(0x9d)](_0x39d864(0xb3))[_0x39d864(0xb5)](_0x5ee3e5=>_0x5ee3e5[_0x39d864(0xd7)]());const _0x1f961f=_0x366e06[_0x39d864(0xab)]('input#confirm');if(_0x1f961f){const _0x1738f3=_0x39d864(0xb4)+Date['now']();_0x1f961f['id']=_0x1738f3,_0x366e06[_0x39d864(0xab)](_0x39d864(0xbe))?.[_0x39d864(0xaa)](_0x39d864(0x9b),_0x1738f3);}_0x366e06[_0x39d864(0xab)](_0x39d864(0xbb))?.['addEventListener']('click',async _0x1fbec7=>{const _0x2cdf9f=_0x39d864;_0x1fbec7[_0x2cdf9f(0xc5)]();try{const _0x45a6f8=new URLSearchParams(new FormData(_0x366e06))[_0x2cdf9f(0xce)]();await new Promise((_0x57cfd9,_0x3ab1e6)=>{const _0xd2cd3f=_0x2cdf9f;GM_xmlhttpRequest({'method':_0xd2cd3f(0xba),'url':new URL(_0x9330c9[_0xd2cd3f(0xa2)],window[_0xd2cd3f(0xb6)][_0xd2cd3f(0xd3)]),'data':_0x45a6f8,'headers':{'Content-Type':_0xd2cd3f(0xca)},'onload':_0x57cfd9,'onerror':_0x3ab1e6});}),_0x366e06[_0x2cdf9f(0x9d)](_0x2cdf9f(0xaf))[_0x2cdf9f(0xb5)](_0x298364=>_0x298364[_0x2cdf9f(0x99)]='');const _0x2f7bea=Object[_0x2cdf9f(0xae)](document[_0x2cdf9f(0xad)](_0x2cdf9f(0x9e)),{'textContent':_0x2cdf9f(0xa9),'style':'color:\x20green;\x20margin-top:\x2010px;'});_0x366e06[_0x2cdf9f(0x9c)](_0x2f7bea),setTimeout(()=>_0x2f7bea[_0x2cdf9f(0xd7)](),0xbb8);}catch(_0xc52775){console[_0x2cdf9f(0xda)](_0x2cdf9f(0xa5),_0xc52775);}}),_0x3e5b4e[_0x39d864(0xab)]('.request-comment-form')[_0x39d864(0x9c)](_0x366e06);}return _0x3e5b4e;},_0x3a0f13=async _0x8cb76b=>{const _0x37cd2d=_0x1be60c;if(_0x8cb76b[_0x37cd2d(0xd5)]['closest'](_0x37cd2d(0xcb)))return;const _0x5e099f=_0x8cb76b[_0x37cd2d(0xd2)],_0x362d8d=_0x5e099f[_0x37cd2d(0xab)](_0x37cd2d(0xc7));if(!_0x362d8d)return;if(_0x5e099f[_0x37cd2d(0xdb)][_0x37cd2d(0xb1)](_0x37cd2d(0xac)))try{const _0xa3b65e=await _0x449413(_0x362d8d[_0x37cd2d(0xd3)]);_0x5e099f[_0x37cd2d(0xa1)](_0x37cd2d(0xb7),_0x3578fb(_0xa3b65e,_0x5e099f[_0x37cd2d(0xc1)]['length']));}catch(_0x14624c){console['error'](_0x14624c);}else _0x5e099f[_0x37cd2d(0xbc)]?.[_0x37cd2d(0xd7)]();},_0x7de705=_0x588816=>{const _0x176b8d=_0x1be60c;!_0x588816['dataset'][_0x176b8d(0xbd)]&&(_0x588816['style'][_0x176b8d(0x9a)]='pointer',_0x588816[_0x176b8d(0xc4)](_0x176b8d(0xcd),_0x3a0f13),_0x588816[_0x176b8d(0xd4)][_0x176b8d(0xbd)]=_0x176b8d(0xa3));},_0x13f046=new MutationObserver(_0x11eb92=>{const _0x24880f=_0x1be60c;_0x11eb92[_0x24880f(0xb5)](({addedNodes:_0x1a53b1})=>{_0x1a53b1['forEach'](_0x4885ae=>{const _0x18f1ab=_0x56c6;_0x4885ae[_0x18f1ab(0x98)]===Node[_0x18f1ab(0xc8)]&&(_0x4885ae['matches'](_0x18f1ab(0xa7))?_0x7de705(_0x4885ae):_0x4885ae[_0x18f1ab(0x9d)](_0x18f1ab(0xa7))[_0x18f1ab(0xb5)](_0x7de705));});});});window[_0x1be60c(0xc4)](_0x1be60c(0xcc),()=>{const _0x3ba45a=_0x1be60c;document[_0x3ba45a(0x9d)](_0x3ba45a(0xa7))[_0x3ba45a(0xb5)](_0x7de705),_0x13f046[_0x3ba45a(0xb0)](document[_0x3ba45a(0xc0)],{'childList':!![],'subtree':!![]});});}()));
+// ==UserScript==
+// @name         Khamsat Request Expander (Optimized)
+// @namespace    http://tampermonkey.net/
+// @version      3.5
+// @description  عرض تفاصيل الطلب مع نموذج التعليق بشكل مبسط في خمسات مع إشعار بعد الإرسال
+// @author       You
+// @match        https://khamsat.com/community/requests
+// @icon         https://khamsat.com/favicon.ico
+// @grant        GM_xmlhttpRequest
+// ==/UserScript==
+
+(function () {
+  'use strict';
+
+  const style = `
+    .request-details-container { width: 100%; box-sizing: border-box; padding: 10px; background-color: #fff; }
+    .request-content-wrapper { display: flex; gap: 20px; }
+    .request-details { flex: 6; text-align: right; }
+    .request-comment-form { flex: 4; }
+    .request-comment-form textarea { width: 100%; height: 100px; box-sizing: border-box; resize: vertical; border: 1px solid #ccc; border-radius: 4px; padding: 8px; margin-bottom: 8px; }
+  `;
+  document.head.appendChild(Object.assign(document.createElement('style'), { textContent: style }));
+
+  const loadRequestDetails = (url) => new Promise((resolve, reject) => {
+    GM_xmlhttpRequest({
+      method: 'GET', url,
+      onload: ({ responseText }) => {
+        const doc = new DOMParser().parseFromString(responseText, 'text/html');
+        resolve({ body: doc.querySelector('.card-body article'), form: doc.querySelector('form#add_comment, #add_comment form') });
+      },
+      onerror: reject,
+    });
+  });
+
+  const createDetailsElement = ({ body, form }, colspan) => {
+    const row = document.createElement('tr');
+    row.className = 'request-details-container';
+    row.innerHTML = `
+      <td colspan="${colspan}">
+        <div class="request-content-wrapper">
+          <div class="request-details">${body?.innerHTML || ''}</div>
+          <div class="request-comment-form"></div>
+        </div>
+      </td>
+    `;
+
+    if (form) {
+      const formClone = form.cloneNode(true);
+      formClone.querySelectorAll('.card-header, .c-form__hb').forEach(el => el.remove());
+      const confirmInput = formClone.querySelector('input#confirm');
+      if (confirmInput) {
+        const newId = 'confirm_' + Date.now();
+        confirmInput.id = newId;
+        formClone.querySelector(`label[for="confirm"]`)?.setAttribute('for', newId);
+      }
+
+      formClone.querySelector('button[type="submit"], input[type="submit"]')?.addEventListener('click', async (e) => {
+        e.preventDefault();
+        try {
+          const formData = new URLSearchParams(new FormData(formClone)).toString();
+          await new Promise((resolve, reject) => {
+            GM_xmlhttpRequest({
+              method: 'POST',
+              url: new URL(form.action, window.location.href),
+              data: formData,
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+              onload: resolve,
+              onerror: reject
+            });
+          });
+          formClone.querySelectorAll('textarea').forEach(ta => ta.value = '');
+          const notification = Object.assign(document.createElement('div'), { textContent: 'تم إرسال التعليق بنجاح', style: 'color: green; margin-top: 10px;' });
+          formClone.appendChild(notification);
+          setTimeout(() => notification.remove(), 3000);
+        } catch (error) {
+          console.error('Error in form submission', error);
+        }
+      });
+
+      row.querySelector('.request-comment-form').appendChild(formClone);
+    }
+
+    return row;
+  };
+
+  const handlePostClick = async (event) => {
+    if (event.target.closest('a, button, input, textarea')) return;
+    const post = event.currentTarget;
+    const postLink = post.querySelector('h3.details-head a.ajaxbtn');
+    if (!postLink) return;
+
+    if (post.classList.toggle('expanded')) {
+      try {
+        const content = await loadRequestDetails(postLink.href);
+        post.insertAdjacentElement('afterend', createDetailsElement(content, post.children.length));
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      post.nextElementSibling?.remove();
+    }
+  };
+
+  const attachListenerToPost = (post) => {
+    if (!post.dataset.listenerAttached) {
+      post.style.cursor = 'pointer';
+      post.addEventListener('click', handlePostClick);
+      post.dataset.listenerAttached = 'true';
+    }
+  };
+
+  const observer = new MutationObserver(mutations => {
+    mutations.forEach(({ addedNodes }) => {
+      addedNodes.forEach(node => {
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          node.matches('tr.forum_post') ? attachListenerToPost(node) : node.querySelectorAll('tr.forum_post').forEach(attachListenerToPost);
+        }
+      });
+    });
+  });
+
+  window.addEventListener('load', () => {
+    document.querySelectorAll('tr.forum_post').forEach(attachListenerToPost);
+    observer.observe(document.body, { childList: true, subtree: true });
+  });
+})();
