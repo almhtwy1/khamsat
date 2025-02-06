@@ -11,11 +11,20 @@
         'https://raw.githubusercontent.com/almhtwy1/khamsat/main/Smart%20responses.js'
     ];
 
-    scripts.forEach(url => {
-        const script = document.createElement('script');
-        script.src = `${url}?v=${new Date().getTime()}`;  // إضافة توقيع زمني لمنع الكاش
-        script.type = 'text/javascript';
-        script.async = false;
-        document.head.appendChild(script);
-    });
+    function loadScript(url) {
+        GM_xmlhttpRequest({
+            method: 'GET',
+            url: `${url}?v=${new Date().getTime()}`,  // منع الكاش
+            onload: function(response) {
+                const script = document.createElement('script');
+                script.textContent = response.responseText;
+                document.head.appendChild(script);
+            },
+            onerror: function() {
+                console.error(`فشل تحميل السكريبت من: ${url}`);
+            }
+        });
+    }
+
+    scripts.forEach(loadScript);
 })();
