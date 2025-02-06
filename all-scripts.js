@@ -1,4 +1,4 @@
-(function() {
+(async function() {
     const scripts = [
         'https://raw.githubusercontent.com/almhtwy1/khamsat/main/titles%20Cache.js',
         'https://raw.githubusercontent.com/almhtwy1/khamsat/main/Khamsat%20Categories.js',
@@ -11,20 +11,16 @@
         'https://raw.githubusercontent.com/almhtwy1/khamsat/main/Smart%20responses.js'
     ];
 
-    function loadScript(url) {
-        GM_xmlhttpRequest({
-            method: 'GET',
-            url: `${url}?v=${new Date().getTime()}`,  // منع الكاش
-            onload: function(response) {
-                const script = document.createElement('script');
-                script.textContent = response.responseText;
-                document.head.appendChild(script);
-            },
-            onerror: function() {
-                console.error(`فشل تحميل السكريبت من: ${url}`);
-            }
-        });
+    for (const url of scripts) {
+        try {
+            const response = await fetch(`${url}?v=${Date.now()}`);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            const scriptText = await response.text();
+            const scriptElement = document.createElement('script');
+            scriptElement.textContent = scriptText;
+            document.head.appendChild(scriptElement);
+        } catch (error) {
+            console.error(`فشل تحميل السكريبت من: ${url}`, error);
+        }
     }
-
-    scripts.forEach(loadScript);
 })();
