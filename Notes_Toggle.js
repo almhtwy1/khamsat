@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Khamsat Notes Toggle
+// @name         Khamsat Notes Toggle with Auto-Save
 // @namespace    http://tampermonkey.net/
-// @version      2.1
-// @description  عرض جزء الملاحظات فقط مع إمكانية توسيع البطاقة عند النقر عليها وإضافة إشعار حفظ عصري وعلامة في حال وجود نص محفوظ مع أيقونة ورقة ملاحظات صفراء مميزة في قائمة الطلبات
+// @version      2.2
+// @description  عرض جزء الملاحظات مع الحفظ التلقائي وإمكانية توسيع البطاقة عند النقر عليها وإضافة إشعار حفظ عصري وعلامة في حال وجود نص محفوظ
 // @author       Joe
 // @match        https://khamsat.com/community/requests/*
 // @match        https://khamsat.com/community/requests
@@ -33,7 +33,6 @@
             <div class="card-body" style="display: none;">
               <textarea id="noteTextarea" style="width: 100%; height: 150px; resize: vertical;" placeholder="اكتب ملاحظاتك هنا..."></textarea>
               <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
-                <button id="saveNoteBtn" class="c-button c-button--primary u-block@small">حفظ</button>
                 <span id="saveNotification" style="display: none; color: green; font-weight: bold;">✔ تم الحفظ بنجاح</span>
               </div>
             </div>
@@ -61,6 +60,9 @@
             noteIndicator.style.display = 'inline';
           }
 
+          // إضافة متغير للتأخير
+          let saveTimeout;
+
           const saveNote = async () => {
             try {
               localStorage.setItem(storageKey, noteTextarea.value);
@@ -78,7 +80,13 @@
             }
           };
 
-          document.getElementById('saveNoteBtn').addEventListener('click', saveNote);
+          // إضافة مستمع حدث input للحفظ التلقائي
+          noteTextarea.addEventListener('input', () => {
+            // إلغاء المؤقت السابق إذا كان موجوداً
+            clearTimeout(saveTimeout);
+            // تعيين مؤقت جديد للحفظ بعد نصف ثانية من توقف الكتابة
+            saveTimeout = setTimeout(saveNote, 500);
+          });
 
           document.getElementById('toggleNote').addEventListener('click', function () {
             const cardBody = noteCard.querySelector('.card-body');
@@ -96,18 +104,61 @@
             const note = localStorage.getItem('khamsat_note_' + requestId);
             if (note && note.trim() !== '') {
               if (!link.closest('td').querySelector('.note-icon')) {
+                // إنشاء حاوية للأيقونة والتلميح
+                const iconContainer = document.createElement('div');
+                iconContainer.className = 'note-icon-container';
+                iconContainer.style.position = 'absolute';
+                iconContainer.style.left = '5px';
+                iconContainer.style.top = '50%';
+                iconContainer.style.transform = 'translateY(-50%)';
+
+                // إنشاء الأيقونة
                 const noteIcon = document.createElement('div');
                 noteIcon.className = 'note-icon';
                 noteIcon.innerHTML = '<svg style="color: #FFD700; font-size: 20px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20px" height="20px"><path d="M4 2h14a2 2 0 012 2v14l-4-4H4a2 2 0 01-2-2V4a2 2 0 012-2z"/></svg>';
-                noteIcon.style.position = 'absolute';
-                noteIcon.style.left = '5px';
-                noteIcon.style.top = '50%';
-                noteIcon.style.transform = 'translateY(-50%)';
                 noteIcon.style.cursor = 'pointer';
+
+                // إنشاء عنصر التلميح
+                const tooltip = document.createElement('div');
+                tooltip.className = 'note-tooltip';
+                tooltip.style.cssText = `
+                    position: absolute;
+                    background: #333;
+                    color: white;
+                    padding: 10px 15px;
+                    border-radius: 4px;
+                    font-size: 14px;
+                    min-width: 200px;
+                    max-width: 400px;
+                    width: max-content;
+                    word-wrap: break-word;
+                    white-space: pre-wrap;
+                    line-height: 1.5;
+                    left: 30px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    display: none;
+                    z-index: 1000;
+                    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                `;
+                tooltip.textContent = note;
+
+                // إضافة event listeners للـ hover
+                iconContainer.addEventListener('mouseenter', () => {
+                    tooltip.style.display = 'block';
+                });
+
+                iconContainer.addEventListener('mouseleave', () => {
+                    tooltip.style.display = 'none';
+                });
+
+                // تجميع العناصر
+                iconContainer.appendChild(noteIcon);
+                iconContainer.appendChild(tooltip);
 
                 const parentTd = link.closest('td');
                 parentTd.style.position = 'relative';
-                parentTd.appendChild(noteIcon);
+                parentTd.appendChild(iconContainer);
               }
             }
           }
