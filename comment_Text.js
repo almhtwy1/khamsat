@@ -1,192 +1,174 @@
 // ==UserScript==
-// @name         إظهار عدد التعليقات بجانب العنوان في خمسات (محسن)
+// @name         إظهار عدد التعليقات في خمسات (محسّن)
 // @namespace    https://khamsat.com/
-// @version      2.1
-// @description  يعرض عدد التعليقات بجانب العنوان في صفحة الطلبات في خمسات ويعمل حتى بعد الضغط على "عرض المواضيع الأقدم" بدون تخزين محلي. محسّن للتحكم في عدد الطلبات وتحسين الأداء.
+// @version      2.2
+// @description  نسخة محسنة لعرض عدد التعليقات مع معالجة أفضل للأخطاء والتحقق من المستخدم
 // @author       محمد
 // @match        https://khamsat.com/community/requests*
-// @grant        none
+// @grant        GM_xmlhttpRequest
+// @connect      raw.githubusercontent.com
 // @run-at       document-idle
 // ==/UserScript==
 
-(function () {
+(function() {
     'use strict';
 
-    // إعدادات التحكم في الطلبات
-    const MAX_CONCURRENT_REQUESTS = 5; // الحد الأقصى للطلبات الموازية
-    const RETRY_LIMIT = 3; // عدد مرات إعادة المحاولة في حال فشل الطلب
+    const CONFIG = {
+        MAX_CONCURRENT_REQUESTS: 3,
+        RETRY_LIMIT: 3,
+        RETRY_DELAY: 1000,
+        LOAD_MORE_DELAY: 1500,
+        AUTH_CHECK_INTERVAL: 5000
+    };
 
-    // جلب قائمة اليوزرات المصرح لهم من ملف JSON خارجي
-    const authorizedUsersUrl = "https://raw.githubusercontent.com/almhtwy1/khamsat/refs/heads/main/fetch.json";
-    let authorizedUsers = [];
-
-    fetch(authorizedUsersUrl)
-        .then(response => response.json())
-        .then(data => {
-            authorizedUsers = data.authorizedUsers;
-            checkUserAuthorization();
-        })
-        .catch(error => {
-            console.error("فشل جلب قائمة اليوزرات:", error);
-        });
-
-    // التحقق من إذا كان المستخدم مصرح له
-    function checkUserAuthorization() {
-        const usernameLink = document.querySelector('a[href="/user/almhtwy"]'); // تحديد الرابط الذي يحتوي على اسم المستخدم
-        if (usernameLink === null) {
-            alert("أنت غير مصرح لك باستخدام السكربت!");
-            return; // إنهاء السكربت إذا لم يتم العثور على الرابط
+    class CommentCounter {
+        constructor() {
+            this.cache = new Map();
+            this.activeRequests = 0;
+            this.requestQueue = [];
+            this.authorized = false;
+            this.retryCount = 0;
         }
 
-        const username = usernameLink.title; // الحصول على اسم المستخدم من خاصية title في الرابط
-
-        if (!authorizedUsers.includes(username)) {
-            alert("أنت غير مصرح لك باستخدام السكربت!");
-            return; // إنهاء السكربت إذا كان اسم المستخدم غير مصرح له
+        async init() {
+            try {
+                await this.checkAuthorization();
+                if (this.authorized) {
+                    this.setupObservers();
+                    this.addStyles();
+                    await this.updateComments();
+                }
+            } catch (error) {
+                console.error('فشل في تهيئة السكريبت:', error);
+                this.showError('حدث خطأ أثناء تهيئة السكريبت. يرجى تحديث الصفحة.');
+            }
         }
 
-        // تنفيذ باقي السكربت بعد التحقق من المستخدم المصرح له
-        startScript();
-    }
-
-    function startScript() {
-        // كاش لتخزين عدد التعليقات
-        const commentCache = {};
-
-        // قائمة انتظار الطلبات
-        let requestQueue = [];
-        let activeRequests = 0;
-
-        // دالة لإضافة تعليق عدد التعليقات إلى المنشور
-        function appendCommentCount(post, count) {
-            const existingSpan = post.querySelector('.comments-count');
-            if (existingSpan) return; // تجنب إضافة نفس العدد مرتين
-
-            const commentText = count === '1' ? 'تعليق' : 'تعليقات';
-            const countSpan = document.createElement('span');
-            countSpan.textContent = ` (${count} ${commentText})`;
-            countSpan.style.color = '#ff4500'; // لون مميز
-            countSpan.style.fontWeight = 'bold';
-            countSpan.style.marginLeft = '5px';
-            countSpan.classList.add('comments-count');
-            post.appendChild(countSpan);
+        async checkAuthorization() {
+            try {
+                const response = await fetch('https://raw.githubusercontent.com/almhtwy1/khamsat/refs/heads/main/fetch.json');
+                if (!response.ok) throw new Error('فشل في جلب قائمة المستخدمين المصرح لهم');
+                
+                const data = await response.json();
+                const username = this.getCurrentUsername();
+                
+                if (!username || !data.authorizedUsers.includes(username)) {
+                    this.showError('غير مصرح لك باستخدام هذا السكريبت');
+                    return false;
+                }
+                
+                this.authorized = true;
+                return true;
+            } catch (error) {
+                console.error('خطأ في التحقق من الصلاحية:', error);
+                if (this.retryCount < CONFIG.RETRY_LIMIT) {
+                    this.retryCount++;
+                    await new Promise(resolve => setTimeout(resolve, CONFIG.RETRY_DELAY));
+                    return this.checkAuthorization();
+                }
+                this.showError('فشل في التحقق من الصلاحية. يرجى المحاولة لاحقاً.');
+                return false;
+            }
         }
 
-        // دالة لمعالجة طلب واحد مع إعادة المحاولة
-        async function processRequest(post, retries = 0) {
-            activeRequests++;
+        getCurrentUsername() {
+            const usernameElement = document.querySelector('a[href^="/user/"]');
+            return usernameElement?.getAttribute('title')?.trim();
+        }
+
+        showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #ff4444;
+                color: white;
+                padding: 15px;
+                border-radius: 5px;
+                z-index: 9999;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            `;
+            errorDiv.textContent = message;
+            document.body.appendChild(errorDiv);
+            setTimeout(() => errorDiv.remove(), 5000);
+        }
+
+        async processPost(post) {
+            if (this.cache.has(post.href)) {
+                this.appendCommentCount(post, this.cache.get(post.href));
+                return;
+            }
+
             try {
                 const response = await fetch(post.href, { credentials: 'include' });
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                
                 const text = await response.text();
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(text, 'text/html');
+                const doc = new DOMParser().parseFromString(text, 'text/html');
                 const commentsElement = doc.querySelector('.card-header.bg-white h3');
+                
                 if (commentsElement) {
-                    const match = commentsElement.textContent.trim().match(/\d+/);
-                    if (match) {
-                        const count = parseInt(match[0], 10);
-                        commentCache[post.href] = count;
-                        appendCommentCount(post, count);
-                    }
+                    const count = parseInt(commentsElement.textContent.match(/\d+/)?.[0] || '0', 10);
+                    this.cache.set(post.href, count);
+                    this.appendCommentCount(post, count);
                 }
             } catch (error) {
-                if (retries < RETRY_LIMIT) {
-                    console.warn(`محاولة إعادة الطلب للمنشور: ${post.href} (محاولة ${retries + 1})`);
-                    requestQueue.push(() => processRequest(post, retries + 1));
-                } else {
-                    console.error(`فشل جلب عدد التعليقات للمنشور: ${post.href}`, error);
+                console.error(`فشل في جلب التعليقات: ${post.href}`, error);
+                if (!this.cache.has(post.href)) {
+                    this.cache.set(post.href, '؟');
+                    this.appendCommentCount(post, '؟');
                 }
-            } finally {
-                activeRequests--;
-                processQueue();
             }
         }
 
-        // دالة لمعالجة قائمة الانتظار
-        function processQueue() {
-            while (activeRequests < MAX_CONCURRENT_REQUESTS && requestQueue.length > 0) {
-                const request = requestQueue.shift();
-                request();
+        appendCommentCount(post, count) {
+            if (post.querySelector('.comments-count')) return;
+
+            const countSpan = document.createElement('span');
+            countSpan.className = 'comments-count';
+            countSpan.textContent = ` (${count} ${count === 1 ? 'تعليق' : 'تعليقات'})`;
+            post.appendChild(countSpan);
+        }
+
+        async updateComments() {
+            const posts = document.querySelectorAll('td.details-td h3.details-head a.ajaxbtn:not([data-processed])');
+            for (const post of posts) {
+                post.setAttribute('data-processed', 'true');
+                while (this.activeRequests >= CONFIG.MAX_CONCURRENT_REQUESTS) {
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                }
+                this.activeRequests++;
+                await this.processPost(post);
+                this.activeRequests--;
             }
         }
 
-        // دالة لتحديث عدد التعليقات
-        function updateComments() {
-            const posts = document.querySelectorAll('td.details-td h3.details-head a.ajaxbtn');
-            posts.forEach(post => {
-                if (post.querySelector('.comments-count')) return;
-
-                if (commentCache[post.href] !== undefined) {
-                    appendCommentCount(post, commentCache[post.href]);
-                } else {
-                    requestQueue.push(() => processRequest(post));
-                }
-            });
-            processQueue();
-        }
-
-        // دالة لـ Debouncing لتقليل عدد مرات التنفيذ
-        function debounce(func, delay) {
-            let debounceTimer;
-            return function () {
-                const context = this;
-                const args = arguments;
-                clearTimeout(debounceTimer);
-                debounceTimer = setTimeout(() => func.apply(context, args), delay);
-            };
-        }
-
-        const debouncedUpdateComments = debounce(updateComments, 500);
-
-        // مراقبة التغييرات في الـ DOM باستخدام MutationObserver
-        function setupMutationObserver() {
+        setupObservers() {
+            // مراقب التغييرات في DOM
+            const observer = new MutationObserver(_.debounce(() => this.updateComments(), 500));
             const targetNode = document.querySelector('.community-posts-list');
-            if (!targetNode) {
-                console.error('لم يتم العثور على العنصر .community-posts-list');
-                return;
+            if (targetNode) {
+                observer.observe(targetNode, { childList: true, subtree: true });
             }
 
-            const observerOptions = {
-                childList: true,
-                subtree: true
-            };
-
-            const observer = new MutationObserver((mutationsList) => {
-                for (let mutation of mutationsList) {
-                    if (mutation.addedNodes.length) {
-                        debouncedUpdateComments();
-                        break; // لا حاجة لمواصلة الفحص بعد العثور على إضافة
-                    }
-                }
-            });
-
-            observer.observe(targetNode, observerOptions);
-        }
-
-        // إضافة عدد التعليقات عند النقر على زر "عرض المواضيع الأقدم"
-        function setupLoadMoreButton() {
+            // مراقبة زر "عرض المزيد"
             const loadMoreButton = document.getElementById('community_loadmore_btn');
-            if (!loadMoreButton) {
-                console.error('لم يتم العثور على زر "عرض المواضيع الأقدم"');
-                return;
+            if (loadMoreButton) {
+                loadMoreButton.addEventListener('click', () => {
+                    setTimeout(() => this.updateComments(), CONFIG.LOAD_MORE_DELAY);
+                });
             }
-
-            loadMoreButton.addEventListener('click', () => {
-                // تأخير لتأكد من تحميل المنشورات الجديدة
-                setTimeout(() => {
-                    debouncedUpdateComments();
-                }, 1000);
-            });
         }
 
-        // إضافة أنماط CSS لتحسين العرض
-        function addStyles() {
+        addStyles() {
             const style = document.createElement('style');
             style.textContent = `
                 .comments-count {
+                    color: #ff4500;
+                    font-weight: bold;
+                    margin-right: 5px;
                     font-size: 14px;
-                    margin-left: 5px;
                 }
                 .comments-count:hover {
                     text-decoration: underline;
@@ -195,13 +177,11 @@
             `;
             document.head.appendChild(style);
         }
-
-        // تهيئة السكريبت عند تحميل الصفحة
-        window.addEventListener('load', () => {
-            addStyles();
-            updateComments();
-            setupMutationObserver();
-            setupLoadMoreButton();
-        });
     }
+
+    // تشغيل السكريبت
+    window.addEventListener('load', () => {
+        const counter = new CommentCounter();
+        counter.init();
+    });
 })();
