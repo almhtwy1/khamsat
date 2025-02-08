@@ -9,26 +9,4 @@
 // @grant        none
 // ==/UserScript==
 
-(function () {
-    'use strict';
-  
-    if (location.href.includes('/community/requests')) {
-      window.addEventListener('load', () => {
-        let r = document.getElementById('post_replies');
-        if (r) {
-          let c = r.querySelector('.comments');
-          if (c) {
-            let m = c.querySelectorAll('.discussion-item.comment');
-            if (m.length > 0) {
-              let f = document.getElementById('add_comment');
-              if (f) r.parentNode.insertBefore(f, r);
-              Array.from(m)
-                .sort((a, b) => parseInt(b.getAttribute('data-id')) - parseInt(a.getAttribute('data-id')))
-                .forEach(e => c.appendChild(e));
-            }
-          }
-        }
-      });
-    }
-  })();
-  
+function _0x51eb(_0x5497fa,_0x18a019){const _0xbb5d44=_0xbb5d();return _0x51eb=function(_0x51eb8d,_0x2e4437){_0x51eb8d=_0x51eb8d-0x88;let _0x5c4027=_0xbb5d44[_0x51eb8d];return _0x5c4027;},_0x51eb(_0x5497fa,_0x18a019);}(function(_0x32931f,_0x53b25e){const _0x3c17bb=_0x51eb,_0x190696=_0x32931f();while(!![]){try{const _0x1667df=parseInt(_0x3c17bb(0x95))/0x1+parseInt(_0x3c17bb(0x97))/0x2*(-parseInt(_0x3c17bb(0x93))/0x3)+-parseInt(_0x3c17bb(0x9d))/0x4+parseInt(_0x3c17bb(0xa0))/0x5*(-parseInt(_0x3c17bb(0x8f))/0x6)+parseInt(_0x3c17bb(0x9e))/0x7+parseInt(_0x3c17bb(0x91))/0x8*(-parseInt(_0x3c17bb(0xa2))/0x9)+-parseInt(_0x3c17bb(0x99))/0xa*(-parseInt(_0x3c17bb(0x9a))/0xb);if(_0x1667df===_0x53b25e)break;else _0x190696['push'](_0x190696['shift']());}catch(_0x577e78){_0x190696['push'](_0x190696['shift']());}}}(_0xbb5d,0xe3ced),(function(){'use strict';const _0x369eb5=_0x51eb;location['href'][_0x369eb5(0x98)](_0x369eb5(0x9f))&&window['addEventListener'](_0x369eb5(0x8b),()=>{const _0x1fa126=_0x369eb5;let _0x459d58=document[_0x1fa126(0x92)](_0x1fa126(0x8c));if(_0x459d58){let _0x101e84=_0x459d58[_0x1fa126(0xa1)]('.comments');if(_0x101e84){let _0x582729=_0x101e84[_0x1fa126(0x89)](_0x1fa126(0xa3));if(_0x582729[_0x1fa126(0x8e)]>0x0){let _0xf35b94=document['getElementById'](_0x1fa126(0x96));if(_0xf35b94)_0x459d58[_0x1fa126(0x94)][_0x1fa126(0x90)](_0xf35b94,_0x459d58);Array[_0x1fa126(0x88)](_0x582729)['sort']((_0x2d8863,_0x4edf36)=>parseInt(_0x4edf36['getAttribute'](_0x1fa126(0x8a)))-parseInt(_0x2d8863[_0x1fa126(0x9b)]('data-id')))[_0x1fa126(0x8d)](_0x1b7d2e=>_0x101e84[_0x1fa126(0x9c)](_0x1b7d2e));}}}});}()));function _0xbb5d(){const _0x3fbbdc=['/community/requests','4102045jhNjzI','querySelector','90xgnXec','.discussion-item.comment','from','querySelectorAll','data-id','load','post_replies','forEach','length','6eJhSXf','insertBefore','394816XfLTao','getElementById','3VxRDcW','parentNode','473870zzNlmV','add_comment','124018afDQjw','includes','26470IjCFhL','5753qvprWj','getAttribute','appendChild','3106540bIlMtg','8591961fCbpPR'];_0xbb5d=function(){return _0x3fbbdc;};return _0xbb5d();}
