@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="refresh" content="0; url=https://your-default-link.com">
+    <script>
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+            window.location.href = "https://apps.apple.com/us/app/quitnow/id483994930"; // رابط App Store
+        } else if (/android/i.test(userAgent)) {
+            window.location.href = "https://play.google.com/store/apps/details?id=com.EAGINsoftware.dejaloYa&hl=ar"; // رابط Google Play
+        } else {
+            window.location.href = "https://www.quitnow.app/en"; // رابط بديل في حال كان على جهاز كمبيوتر
+        }
+    </script>
+</head>
+<body>
+    <p>يتم إعادة توجيهك تلقائيًا...</p>
+</body>
+</html>
