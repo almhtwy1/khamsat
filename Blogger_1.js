@@ -1,3 +1,4 @@
+// ==UserScript==
 // @name         مزامنة المحتوى بين تبويبين في Blogger (تحديث فعلي)
 // @namespace    http://tampermonkey.net/
 // @version      2.1
