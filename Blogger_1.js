@@ -4,7 +4,7 @@
 // @version      2.1
 // @description  تحديث المحتوى بين تبويبين في Blogger بشكل فعلي دون الحاجة لإعادة تحميل الصفحة
 // @author       محمد
-// @match        https://www.blogger.com/blog/post/edit/*
+// @match        https://www.blogger.com/blog/post/*
 // @grant        none
 // ==/UserScript==
 
